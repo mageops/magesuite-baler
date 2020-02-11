@@ -2,10 +2,6 @@
 
 set -e -x
 
-BUILD_DATE=`date -u +%Y-%m-%dT%H:%M:%SZ`
-
-[ -z "$DOCKERFILE_PATH" ]   && DOCKERFILE_PATH="Dockerfile"
-
 [ -z "$VCS_REF" ]           && VCS_REF="$SOURCE_COMMIT"
 [ -z "$VCS_REF" ]           && VCS_REF=`git rev-parse --short HEAD`
 
@@ -22,18 +18,13 @@ BUILD_DATE=`date -u +%Y-%m-%dT%H:%M:%SZ`
 [ -z "$DOCKER_TAG" ]        && DOCKER_TAG="${BUILD_VERSION}"
 [ -z "$IMAGE_NAME" ]        && IMAGE_NAME="${DOCKER_REPO}:${DOCKER_TAG}"
 
-PARAMS=("--tag" "$IMAGE_NAME")
+IMAGES=("$IMAGE_NAME")
 
 if [ -n "$VCS_TAG" ];then
-    PARAMS+=("--tag" "${DOCKER_REPO}:${VCS_TAG}")
-    PARAMS+=("--tag" "${DOCKER_REPO}:stable")
+    IMAGES+= "${DOCKER_REPO}:${VCS_TAG}")
+    IMAGES+=("${DOCKER_REPO}:stable")
 fi
 
-docker build \
-    --file "$DOCKERFILE_PATH" \
-	--label org.label-schema.version=$BUILD_VERSION \
-    --label org.label-schema.build-date=$BUILD_DATE \
-    --label org.label-schema.vcs-url=$VCS_URL \
-    --label org.label-schema.vcs-ref=$VCS_REF \
-    "${PARAMS[@]}" \
-	.
+for img of "${IMAGES[@]}";do
+    docker push "${img}"
+done
