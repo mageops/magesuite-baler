@@ -21,7 +21,7 @@ set -e -x
 IMAGES=("$IMAGE_NAME")
 
 if [ -n "$VCS_TAG" ];then
-    IMAGES+= "${DOCKER_REPO}:${VCS_TAG}")
+    IMAGES+=("${DOCKER_REPO}:${VCS_TAG}")
     IMAGES+=("${DOCKER_REPO}:stable")
 fi
 
