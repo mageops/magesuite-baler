@@ -1,7 +1,7 @@
 # Magento baler bundler
 
-![Docker Automated build](https://img.shields.io/docker/automated/mageops/magesuite-baler)
-![Docker Build Status](https://img.shields.io/docker/build/mageops/magesuite-baler)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/mageops/magesuite-baler)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/mageops/magesuite-baler)
 ![Docker Pulls](https://img.shields.io/docker/pulls/mageops/magesuite-baler)
 ![Docker Stars](https://img.shields.io/docker/stars/mageops/magesuite-baler)
 ![Made by creativestyle](https://img.shields.io/badge/made%20by-creativestyle-%23c12026)
