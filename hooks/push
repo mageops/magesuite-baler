@@ -25,6 +25,6 @@ if [ -n "$VCS_TAG" ];then
     IMAGES+=("${DOCKER_REPO}:stable")
 fi
 
-for img of "${IMAGES[@]}";do
+for img in "${IMAGES[@]}";do
     docker push "${img}"
 done
