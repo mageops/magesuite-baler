@@ -26,7 +26,7 @@ BUILD_DATE=`date -u +%Y-%m-%dT%H:%M:%SZ`
 
 PARAMS=("--tag" "$IMAGE_NAME")
 
-if [ -z "$VCS_TAG" ];then
+if [ -n "$VCS_TAG" ];then
     PARAMS+=("--tag" "${DOCKER_REPO}:${VCS_TAG}")
     PARAMS+=("--tag" "${DOCKER_REPO}:stable")
 fi
