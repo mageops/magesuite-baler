@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e -x
 
@@ -17,14 +17,19 @@ BUILD_DATE=`date -u +%Y-%m-%dT%H:%M:%SZ`
 [ -z "$VCS_BRANCH" ]        && VCS_BRANCH="$SOURCE_BRANCH"
 [ -z "$VCS_BRANCH" ]        && VCS_BRANCH=`git rev-parse --abbrev-ref HEAD`
 
-
 [ -z "$BUILD_VERSION" ]     && BUILD_VERSION="$DOCKER_TAG"
 [ -z "$BUILD_VERSION" ]     && BUILD_VERSION="${VCS_TAG}"
 [ -z "$BUILD_VERSION" ]     && BUILD_VERSION="${VCS_BRANCH}-${VCS_REF}"
 
-[ -z "$DOCKER_REPO" ]       && DOCKER_REPO="magesuite/bundle-theme-js"
 [ -z "$DOCKER_TAG" ]        && DOCKER_TAG="${BUILD_VERSION}"
 [ -z "$IMAGE_NAME" ]        && IMAGE_NAME="${DOCKER_REPO}:${DOCKER_TAG}"
+
+PARAMS=("--tag" "$IMAGE_NAME")
+
+if [ -z "$VCS_TAG" ];then
+    PARAMS+=("--tag" "${DOCKER_REPO}:${VCS_TAG}")
+    PARAMS+=("--tag" "${DOCKER_REPO}:stable")
+fi
 
 docker build \
     --file "$DOCKERFILE_PATH" \
@@ -32,4 +37,5 @@ docker build \
     --label org.label-schema.build-date=$BUILD_DATE \
     --label org.label-schema.vcs-url=$VCS_URL \
     --label org.label-schema.vcs-ref=$VCS_REF \
-	--tag $IMAGE_NAME .
+    "${PARAMS[@]}" \
+	.
