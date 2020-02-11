@@ -6,6 +6,8 @@
 ![Docker Stars](https://img.shields.io/docker/stars/mageops/magesuite-baler)
 ![Made by creativestyle](https://img.shields.io/badge/made%20by-creativestyle-%23c12026)
 
+This solution is a sucessor to [MagePack](https://github.com/mageops/docker-magento-advanced-js-bundling) bundler
+
 ## Usage
 For `$VERSION`, check releases github page
 ```
